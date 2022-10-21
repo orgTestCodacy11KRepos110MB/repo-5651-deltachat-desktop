@@ -1162,6 +1162,13 @@ onReady(() => {
     }
     chatStore.effect.onEventMessagesChanged(chatId, msgId)
   })
+
+  BackendRemote.on('ReactionsChanged', (accountId, { chatId, msgId }) => {
+    if (accountId !== window.__selectedAccountId) {
+      return
+    }
+    chatStore.effect.onEventMessagesChanged(chatId, msgId)
+  })
 })
 
 export function calculatePageKey(
