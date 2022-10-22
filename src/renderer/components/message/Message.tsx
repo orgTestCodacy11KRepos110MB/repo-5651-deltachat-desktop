@@ -36,8 +36,8 @@ import { getDirection, truncateText } from '../../../shared/util'
 import { mapCoreMsgStatus2String } from '../helpers/MapMsgStatus'
 import { ContextMenuItem } from '../ContextMenu'
 import { BackendRemote, Type } from '../../backend-com'
-import { T } from '@deltachat/jsonrpc-client'
 import { selectedAccountId } from '../../ScreenController'
+import { Reactions } from './Reactions'
 
 const Avatar = (
   contact: Type.Contact,
@@ -493,7 +493,7 @@ const Message = (props: {
               {tx('show_full_message_in_browser')}
             </div>
           )}
-          {message.reactions && <Reactions reactions={message.reactions} />}
+          {message.reactions && <Reactions messageId={message.id} reactions={message.reactions} />}
           <MessageMetaData
             fileMime={(!isSetupmessage && message.fileMime) || null}
             direction={direction}
@@ -629,26 +629,6 @@ function WebxdcMessageContent({ message }: { message: Type.Message }) {
       >
         {tx('start_app')}
       </button>
-    </div>
-  )
-}
-
-function Reactions({ reactions }: { reactions: T.Reactions }) {
-  const emojis = Object.keys(reactions.reactions)
-  const own_emojis = reactions.reactionsByContact[C.DC_CONTACT_ID_SELF] || []
-
-  // TODO: on hover show who reacted? maybe lazy loading onhover set title of show custom popover
-  return (
-    <div className='message-reactions'>
-      {emojis.map(emoji => {
-        const count = reactions.reactions[emoji]
-        return (
-          <span className={`reaction ${own_emojis.includes(emoji) && 'own'}`}>
-            {emoji}
-            {count > 1 ? ` ${count}` : ''}
-          </span>
-        )
-      })}
     </div>
   )
 }
