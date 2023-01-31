@@ -5,8 +5,10 @@
 ### Added
 
 ### Changed
+- removed dependency on `emoji-regex`
 
 ### Fixed
+- improve jumbomoji logic (that emoji only messages appear bigger), now works even with new emojis that are not in delta chat yet.
 
 ### Removed
 
